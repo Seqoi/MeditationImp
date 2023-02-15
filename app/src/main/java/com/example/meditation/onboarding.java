@@ -22,11 +22,11 @@ public class onboarding extends AppCompatActivity {
         setContentView(R.layout.activity_onboarding);
     }
     public void loginActivity(View v) {
-        Intent act = new Intent(onboarding.this, Login.class);
-        startActivity(act);
+        Intent toLogin = new Intent(onboarding.this, Login.class);
+        startActivity(toLogin);
     }
     public void toRegister(View view) {
-        Intent abc = new Intent(onboarding.this, Register.class);
-        startActivity(abc);
+        Intent toRegister = new Intent(onboarding.this, Register.class);
+        startActivity(toRegister);
     }
 }

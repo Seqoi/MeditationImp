@@ -34,7 +34,6 @@ public class PageFragmentSounds extends Fragment {
             "Sleep Token - High Water",
             "Blind Channel - Left Outside Alone"
     };
-
     public static final Integer[] audio_ids = {
             R.raw.infinitebeauty,
             R.raw.song2,
@@ -42,6 +41,8 @@ public class PageFragmentSounds extends Fragment {
             R.raw.song4,
             R.raw.song5
     };
+    private RecyclerView recyclerView;
+    private MusicAdapter adapter;
 
     public PageFragmentSounds() {
         setHasOptionsMenu(true);
@@ -62,13 +63,12 @@ public class PageFragmentSounds extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.audios);
+        recyclerView = getView().findViewById(R.id.audios);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<CreateList> createLists = prepareData();
-        MusicAdapter adapter = new MusicAdapter(getActivity().getApplicationContext(), createLists);
+        adapter = new MusicAdapter(getActivity().getApplicationContext(), prepareData());
         recyclerView.setAdapter(adapter);
 
     }
@@ -107,7 +107,6 @@ public class PageFragmentSounds extends Fragment {
     }
 
     private ArrayList<CreateList> prepareData() {
-
         ArrayList<CreateList> theaudio = new ArrayList<>();
         for(int i = 0; i < audio_ids.length; i++){
             CreateList createList = new CreateList();

@@ -8,40 +8,40 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Switch;
-import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
 public class Main extends AppCompatActivity {
 
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
+    private FragmentManager fragmentManager;
+    private TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainv);
 
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawLayout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navview);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawLayout);
+        toolbar = findViewById(R.id.toolbar);
+        tabLayout = findViewById(R.id.tabLayout);
 
+        fragmentManager = getSupportFragmentManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_open, R.string.navigation_close);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_open, R.string.navigation_close);
         toggle.setDrawerIndicatorEnabled(false);
         toggle.setHomeAsUpIndicator(R.drawable.hamburger);
-
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,8 +49,9 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        Intent asd = getIntent();
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        Intent translation = getIntent();
+
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         TabLayout.Tab Main = tabLayout.newTab();
         Main.setIcon(R.drawable.home);
         tabLayout.addTab(Main, 0, true);
@@ -63,43 +64,29 @@ public class Main extends AppCompatActivity {
         Profile.setIcon(R.drawable.profile);
         tabLayout.addTab(Profile, 2, true);
 
-        String perehod = asd.getStringExtra("prof");
-
-        Fragment fragment;
-        if (Objects.equals(perehod, "Profile")) {
-            fragment = new PageFragmentProfile();
+        if (Objects.equals(translation.getStringExtra("prof"), "Profile")) {
+            openFragment(new PageFragmentProfile());
             tabLayout.getTabAt(2).select();
         }
         else {
-            fragment = new PageFragmentMain();
+            openFragment(new PageFragmentMain());
             tabLayout.getTabAt(0).select();
         }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.frame, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Fragment fragment = null;
                 switch (tab.getPosition()) {
                     case 1:
-                        fragment = new PageFragmentSounds();
+                        openFragment(new PageFragmentSounds());
                         break;
                     case 2:
-                        fragment = new PageFragmentProfile();
+                        openFragment(new PageFragmentProfile());
                         break;
                     case 0:
                     default:
-                        fragment = new PageFragmentMain();
+                        openFragment(new PageFragmentMain());
                 }
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.frame, fragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
             }
             @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
@@ -114,29 +101,24 @@ public class Main extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment;
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
         switch (item.getItemId()) {
             case R.id.toolbarProfile:
-                fragment = new PageFragmentProfile();
                 tabLayout.getTabAt(2).select();
-                ft.replace(R.id.frame, fragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                openFragment(new PageFragmentProfile());
                 break;
             case R.id.toolbarBack:
-                fragment = new PageFragmentMain();
                 tabLayout.getTabAt(0).select();
-                ft.replace(R.id.frame, fragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                openFragment(new PageFragmentMain());
                 break;
         }
-    return true;
+        return true;
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
     }
 
 }

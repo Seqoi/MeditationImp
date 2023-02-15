@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 toMain(view);
                             } else {
-                                Toast.makeText(Login.this, "Login and password does not match", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -75,11 +75,13 @@ public class Login extends AppCompatActivity {
     }
 
     private void toMain(View view) {
-        Intent move = new Intent(Login.this, Main.class);
-        startActivity(move);
+        Intent toMain = new Intent(Login.this, Main.class);
+        startActivity(toMain);
+        finish();
     }
     private void toRegister(View view) {
-        Intent move = new Intent(Login.this, Register.class);
-        startActivity(move);
+        Intent toRegister = new Intent(Login.this, Register.class);
+        startActivity(toRegister);
+        finish();
     }
 }

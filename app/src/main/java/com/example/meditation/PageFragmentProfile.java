@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 public class PageFragmentProfile extends Fragment {
 
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+
     public PageFragmentProfile() {
         setHasOptionsMenu(true);
     }
@@ -36,12 +39,11 @@ public class PageFragmentProfile extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.gallery);
+        recyclerView = getView().findViewById(R.id.gallery);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<CreateList> createLists = prepareData();
-        MyAdapter adapter = new MyAdapter(getActivity().getApplicationContext(), createLists);
+        adapter = new MyAdapter(getActivity().getApplicationContext(), prepareData());
         recyclerView.setAdapter(adapter);
     }
 
@@ -64,29 +66,7 @@ public class PageFragmentProfile extends Fragment {
             R.drawable.img4
     };
 
-    public class CreateList {
-
-        private String image_title;
-        private Integer image_id;
-
-        public String getImage_title() {
-            return image_title;
-        }
-
-        public void setImage_title(String android_version_name) {
-            this.image_title = android_version_name;
-        }
-
-        public Integer getImage_ID() {
-            return image_id;
-        }
-
-        public void setImage_ID(Integer android_image_url) {
-            this.image_id = android_image_url;
-        }
-    }
     private ArrayList<CreateList> prepareData() {
-
         ArrayList<CreateList> theimage = new ArrayList<>();
         for(int i = 0; i< image_titles.length; i++){
             CreateList createList = new CreateList();

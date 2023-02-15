@@ -57,7 +57,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!repeatPassword.getText().toString().equals(password.getText().toString())) {
-                    Toast.makeText(Register.this, "passwords don't match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
                 } else if (login.getText().toString().isEmpty()||password.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Enter email and password", Toast.LENGTH_SHORT).show();
                 } else {
@@ -67,7 +67,7 @@ public class Register extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 toMain(view);
                             } else {
-                                Toast.makeText(Register.this, "error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Email is already taken or incorrect", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -80,10 +80,12 @@ public class Register extends AppCompatActivity {
     private void toMain(View v) {
         Intent toMain = new Intent(Register.this, Main.class);
         startActivity(toMain);
+        finish();
     }
 
     private void toLogin(View v) {
         Intent toLogin = new Intent(Register.this, Login.class);
         startActivity(toLogin);
+        finish();
     }
 }

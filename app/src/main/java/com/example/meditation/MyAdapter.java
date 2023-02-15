@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private ArrayList<PageFragmentProfile.CreateList> galleryList;
+    private ArrayList<CreateList> galleryList;
     private Context context;
 
-    public MyAdapter(Context context, ArrayList<PageFragmentProfile.CreateList> galleryList) {
+    public MyAdapter(Context context, ArrayList<CreateList> galleryList) {
         this.galleryList = galleryList;
         this.context = context;
     }

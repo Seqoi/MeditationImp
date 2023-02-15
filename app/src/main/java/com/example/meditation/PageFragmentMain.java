@@ -38,11 +38,12 @@ public class PageFragmentMain extends Fragment {
             R.drawable.previewimg1,
             R.drawable.previewimg2
     };
+    private MainAdapter adapter;
+    private RecyclerView recycler;
 
     public PageFragmentMain() {
         setHasOptionsMenu(true);
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,11 @@ public class PageFragmentMain extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        RecyclerView recycler = (RecyclerView) getView().findViewById(R.id.lenta);
+        recycler = getView().findViewById(R.id.lenta);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
 
-        MainAdapter adapter = new MainAdapter(getContext(), image_ids);
+        adapter = new MainAdapter(getContext(), image_ids);
         recycler.setAdapter(adapter);
     }
 

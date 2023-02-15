@@ -16,6 +16,8 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ImageView img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,24 +30,25 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_main);
 
-        ImageView img = (ImageView) findViewById(R.id.imageView);
+        img = findViewById(R.id.imageView);
 
         StartAnimation(img);
         StartUp();
     }
 
-    public void StartAnimation(ImageView img) {
+    private void StartAnimation(ImageView img) {
         Animation rotateFadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
         img.startAnimation(rotateFadeIn);
     }
 
-    public void StartUp() {
+    private void StartUp() {
         Handler delay = new Handler();
         delay.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(MainActivity.this, onboarding.class);
                 startActivity(intent);
+                finish();
             }
         }, 1500);
     }
