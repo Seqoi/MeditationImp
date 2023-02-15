@@ -4,6 +4,10 @@
     package="com.example.meditation">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--
+    Современные SDK андроид не требуют разрешение на использование
+    интернета, строка не обязательна
+    -->
 
     <application
         android:allowBackup="true"
